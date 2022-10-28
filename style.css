@@ -54,20 +54,11 @@ body {
   line-height: inherit;
 
   transition: all 0.2s;
-
-  position: absolute;
-}
-
-.btn::after {
-  content: "";
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: ;
-}
-
-.btn-white {
   background-color: white;
+
+  font-size: 2rem;
+
+  cursor: pointer;
 }
 
 .btn-big {
@@ -98,16 +89,81 @@ body {
 }
 
 .container-2 {
+  min-height: 92vh;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column-reverse;
+
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-dark-green) #e0e0e0;
 }
 
 .row {
   width: 90%;
-  margin: 0 auto;
+
+  border-radius: 10%;
   border-bottom: 2px solid black;
   display: flex;
   justify-content: space-between;
   padding: 3rem 1rem;
+  margin-bottom: 3rem;
+
+  position: relative;
+}
+
+.floor__buttons {
+  display: flex;
+  flex-direction: column;
+
+  transform: translateY(-1.5rem);
+}
+
+.button-up {
+  width: 4rem;
+  margin-bottom: 1rem;
+  color: var(--color-dark-green);
+  border-color: var(--color-dark-green);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.button-down {
+  color: rgba(255, 116, 29, 0.8);
+  border-color: rgba(255, 116, 29, 0.8);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.lift__row {
+  position: absolute;
+  left: 10.5rem;
+  bottom: 1.7rem;
+
+  display: flex;
+}
+
+.lift {
+  display: flex;
+  margin-right: 3rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.left-door {
+  height: 12rem;
+  width: 5rem;
+  background-color: #fcf9c6;
+  margin-right: 0.1rem;
+}
+.right-door {
+  height: 12rem;
+  width: 5rem;
+  background-color: #fcf9c6;
+}
+
+.floor__number {
+  font-size: 2rem;
 }
 
 @keyframes moveInUp {
