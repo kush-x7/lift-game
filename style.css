@@ -81,6 +81,10 @@ body {
   animation: moveInUp 1s ease-out;
 }
 
+.user-input--animated {
+  animation: moveInUp 1s ease-out;
+}
+
 .user-input {
   display: flex;
   padding: 3rem;
@@ -130,6 +134,7 @@ body {
 }
 
 .button-down {
+  width: 4rem;
   color: rgba(255, 116, 29, 0.8);
   border-color: rgba(255, 116, 29, 0.8);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
