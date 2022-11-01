@@ -89,7 +89,12 @@ checkBtn.addEventListener("click", () => {
           const myLift = getFirstNonMovingLift;
           myLift.classList.add("move-my-lift");
           myLift.style.transform = `translateY(-${17 * floorNumber}rem)`;
-          myLift.style.transition = `all ${floorNumber * 2}s`;
+          const timeToReachOnFloor = floorNumber * 2;
+          myLift.style.transition = `all ${timeToReachOnFloor}s`;
+
+          setTimeout(() => {
+            getAllNonMovingLifts[i].classList.add("not-moving");
+          }, (timeToReachOnFloor + 5) * 1000);
           break;
         }
       });
