@@ -188,3 +188,15 @@ body {
 .hidden {
   display: none;
 }
+
+.move-my-lift {
+  transition: all 5s;
+
+  z-index: 20;
+}
+
+.floor-animated {
+  /* animation: moveInUp 2s ease-in; */
+  animation: moveInUp 1s ease-out 0.3s;
+  animation-fill-mode: backwards;
+}

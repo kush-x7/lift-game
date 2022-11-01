@@ -7,7 +7,7 @@ const userInputBox = document.querySelector(".user-input");
 const getFloors = document.querySelector(".user-input__floors");
 const getLifts = document.querySelector(".user-input__lifts");
 
-// Step 1 Hiding the start button and showing input field
+// -----------------------Hiding The Start Button-----------------------------
 
 startBtn.addEventListener("click", () => {
   setTimeout(() => {
@@ -19,8 +19,7 @@ startBtn.addEventListener("click", () => {
   }, 300);
 });
 
-// Step 2 to get input of user
-
+// -----------------------Get User Input -----------------------------
 checkBtn.addEventListener("click", () => {
   let totalFloors;
   let totalLift;
@@ -39,48 +38,78 @@ checkBtn.addEventListener("click", () => {
     alert("enter lifts");
   }
 
+  // -----------------------Hiding  User Input & showing Lifts and floors-----------------------------
   if (getFloors.value && getLifts.value) {
     userInputBox.classList.add("hidden");
-
-    // Step 3 Add container 2 class and remove flex
     container.classList.remove("center-item");
     container.classList.add("container-2");
 
     // Step 4 Creating Floors an lifts
 
-    // APPROACH
-
+    // -----------------------Creating Floors-----------------------------
     for (let i = 0; i < totalFloors; i++) {
       // 1 Create a outer div and give it a class
 
       const floorRow = document.createElement("div");
-      floorRow.setAttribute("class", `row row-${i}`);
+      floorRow.setAttribute("class", `row row-${i} floor-animated`);
 
       // 2 Now insert this string inside the above div
       const floor = `      
-            <div class="floor__buttons ">
-                <button class="btn button-up button-up-${i}">⬆</button>
-                <button class="btn button-down button-down-${i}">⬇</button>
-            </div>
-            <div class="floor__number floor-${i}">Floor ${i}</div> `;
+        <div class="floor__buttons floor__buttons-${i} ">
+        <button class="btn button-up button-up-${i}">⬆</button>
+        <button class="btn button-down button-down-${i}">⬇</button>
+        </div>
+        <div class="floor__number floor-${i}">Floor ${i}</div> `;
 
       floorRow.innerHTML = floor;
       container.append(floorRow);
     }
 
-    // Now Hide the first and the last floor button
+    // -----------------------Hiding Lift buttons-----------------------------
     document.querySelector(".button-down-0").remove();
     document.querySelector(`.button-up-${totalFloors - 1}`).remove();
     document.querySelector(`.row-0`).style.marginTop = "3.4rem";
     document.querySelector(`.row-${totalFloors - 1}`).style.marginTop =
       "4.5rem";
 
+    // -----------------------Moving Lift on clicking button-----------------------------
     const liftButton = document.querySelectorAll(".btn");
-
     liftButton.forEach((button) => {
-      button.addEventListener("click", () => {
-        console.log("hello");
+      button.addEventListener("click", (e) => {
+        const floorNumber = Number(
+          e.target.parentNode.classList[1].split("-")[1]
+        );
+
+        const getAllNonMovingLifts = document.querySelectorAll(".not-moving");
+
+        // console.log(getAllNonMovingLifts);
+        const getFirstNonMovingLift = getAllNonMovingLifts[0];
+        for (let i = 0; i < getAllNonMovingLifts.length; i++) {
+          getAllNonMovingLifts[i].classList.remove("not-moving");
+          const myLift = getFirstNonMovingLift;
+          myLift.classList.add("move-my-lift");
+          myLift.style.transform = `translateY(-${17 * floorNumber}rem)`;
+          myLift.style.transition = `all ${floorNumber * 2}s`;
+          break;
+        }
       });
     });
+
+    // Let's Create Lift
+    const liftRow = document.createElement("div");
+    liftRow.setAttribute("class", `lift__row`);
+
+    for (let i = 0; i < totalLift; i++) {
+      // 0 = a, 1 =b  2=c ...
+      const lift = `
+      <div class="lift lift-${i} not-moving">
+        <div class="left-door"></div>
+        <div class="right-door"></div>
+      </div> `;
+
+      liftRow.innerHTML += lift;
+      //   Entering Lift in first row only
+      document.querySelector(".row-0").append(liftRow);
+    }
   }
 });
