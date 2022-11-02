@@ -95,7 +95,7 @@ checkBtn.addEventListener("click", () => {
             floorNumber - currentFloorOfNonMovingLift
           );
 
-          allLiftDistancesDifference.push(liftDistance);
+          allLiftDistancesDifference.push(liftDistance); // -> [6, 2, 7, 6]
         }
 
         console.log(allLiftDistancesDifference);
@@ -107,21 +107,18 @@ checkBtn.addEventListener("click", () => {
           allLiftDistancesDifference.indexOf(getMinDistanceValue);
         console.log("I'm the least distance", leastDistanceIndex);
 
-        for (let i = 0; i < getAllNonMovingLifts.length; i++) {
-          getAllNonMovingLifts[i].classList.remove("not-moving");
-          const myLift = getFirstNonMovingLift;
-          //   myLift.classList.add(`current-floor-${floorNumber}`);
-          getAllNonMovingLifts[i].dataset.currentFloor = floorNumber;
-          myLift.classList.add(`move-my-lift`);
-          myLift.style.transform = `translateY(-${17 * floorNumber}rem)`;
-          const timeToReachOnFloor = floorNumber * 2;
-          myLift.style.transition = `all ${timeToReachOnFloor}s`;
+        getAllNonMovingLifts[leastDistanceIndex].classList.remove("not-moving");
+        const myLift = getAllNonMovingLifts[leastDistanceIndex];
+        getAllNonMovingLifts[leastDistanceIndex].dataset.currentFloor =
+          floorNumber;
+        myLift.classList.add(`move-my-lift`);
+        myLift.style.transform = `translateY(-${17 * floorNumber}rem)`;
+        const timeToReachOnFloor = floorNumber * 2;
+        myLift.style.transition = `all ${timeToReachOnFloor}s`;
 
-          setTimeout(() => {
-            getAllNonMovingLifts[i].classList.add("not-moving");
-          }, (timeToReachOnFloor + 5) * 1000);
-          break;
-        }
+        setTimeout(() => {
+          getAllNonMovingLifts[leastDistanceIndex].classList.add("not-moving");
+        }, (timeToReachOnFloor + 5) * 1000);
       });
     });
 
