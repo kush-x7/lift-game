@@ -81,13 +81,38 @@ checkBtn.addEventListener("click", () => {
         );
 
         const getAllNonMovingLifts = document.querySelectorAll(".not-moving");
-
-        // console.log(getAllNonMovingLifts);
         const getFirstNonMovingLift = getAllNonMovingLifts[0];
+
+        //
+        // ----------------------Checking floors of lift-----------------------------
+        let allLiftDistancesDifference = [];
+        for (let i = 0; i < getAllNonMovingLifts.length; i++) {
+          const currentFloorOfNonMovingLift = Number(
+            getAllNonMovingLifts[i].dataset.currentFloor
+          );
+
+          const liftDistance = Number(
+            floorNumber - currentFloorOfNonMovingLift
+          );
+
+          allLiftDistancesDifference.push(liftDistance);
+        }
+
+        console.log(allLiftDistancesDifference);
+
+        const getMinDistanceValue = Math.min(...allLiftDistancesDifference);
+        console.log("I'm the least distance value", getMinDistanceValue);
+
+        const leastDistanceIndex =
+          allLiftDistancesDifference.indexOf(getMinDistanceValue);
+        console.log("I'm the least distance", leastDistanceIndex);
+
         for (let i = 0; i < getAllNonMovingLifts.length; i++) {
           getAllNonMovingLifts[i].classList.remove("not-moving");
           const myLift = getFirstNonMovingLift;
-          myLift.classList.add("move-my-lift");
+          //   myLift.classList.add(`current-floor-${floorNumber}`);
+          getAllNonMovingLifts[i].dataset.currentFloor = floorNumber;
+          myLift.classList.add(`move-my-lift`);
           myLift.style.transform = `translateY(-${17 * floorNumber}rem)`;
           const timeToReachOnFloor = floorNumber * 2;
           myLift.style.transition = `all ${timeToReachOnFloor}s`;
@@ -107,7 +132,7 @@ checkBtn.addEventListener("click", () => {
     for (let i = 0; i < totalLift; i++) {
       // 0 = a, 1 =b  2=c ...
       const lift = `
-      <div class="lift lift-${i} not-moving">
+      <div class="lift lift-${i} not-moving " data-current-floor="0">
         <div class="left-door"></div>
         <div class="right-door"></div>
       </div> `;
