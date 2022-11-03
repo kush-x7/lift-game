@@ -22,7 +22,7 @@ startBtn.addEventListener("click", () => {
   const getAllInputFields = document.querySelectorAll("input");
   for (let i = 0; i < getAllInputFields.length; i++) {
     getAllInputFields[i].addEventListener("keyup", () => {
-      const isLiftUnderTen = getLifts.value <= 10;
+      const isLiftUnderTen = getLifts.value <= 6;
       if (getFloors.value && getLifts.value && isLiftUnderTen) {
         document.querySelector(".btn-start").removeAttribute("disabled");
       } else {

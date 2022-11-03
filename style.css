@@ -285,3 +285,33 @@ input[type="number"] {
   margin-bottom: 0.5rem;
   color: inherit;
 }
+
+@media (max-width: 1130px) {
+  html {
+    font-size: 52.5%;
+  }
+}
+
+@media (max-width: 936px) {
+  html {
+    font-size: 42.5%;
+  }
+}
+
+@media (max-width: 758px) {
+  html {
+    font-size: 32.5%;
+  }
+}
+
+@media (max-width: 584px) {
+  html {
+    font-size: 22.5%;
+  }
+}
+
+@media (max-width: 402px) {
+  html {
+    font-size: 18.5%;
+  }
+}
