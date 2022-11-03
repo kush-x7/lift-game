@@ -43,15 +43,11 @@ checkBtn.addEventListener("click", () => {
   if (getFloors.value) {
     //  Check for the max number
     totalFloors = Number(getFloors.value);
-  } else {
-    alert("enter floors");
   }
 
   if (getLifts.value) {
     // Check for the max number
     totalLift = Number(getLifts.value);
-  } else {
-    alert("enter lifts");
   }
 
   // -----------------------Hiding  User Input & showing Lifts and floors-----------------------------

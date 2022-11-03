@@ -68,13 +68,13 @@ body {
 .btn:hover {
   transform: translateY(-0.3rem);
   background-color: white;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
 }
 
 .btn:active {
   transform: translateY(0.1rem);
   background-color: white;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .btn-animated {
@@ -97,14 +97,14 @@ label {
   flex-direction: column;
 
   background-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
   border-radius: 1.5rem;
 }
 
 input:focus {
   outline: none !important;
   border-color: #28b485;
-  box-shadow: 0 0 5px #28b485;
+  box-shadow: 0 0 0.5rem #28b485;
 }
 
 button.btn-start:disabled {
@@ -141,7 +141,7 @@ button.btn-start:disabled {
   width: 90%;
 
   border-radius: 10%;
-  border-bottom: 2px solid black;
+  border-bottom: 0.2rem solid black;
   display: flex;
   justify-content: space-between;
   padding: 3rem 1rem;
@@ -162,7 +162,7 @@ button.btn-start:disabled {
   margin-bottom: 1rem;
   color: var(--color-dark-green);
   border-color: var(--color-dark-green);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
@@ -170,7 +170,7 @@ button.btn-start:disabled {
   width: 4rem;
   color: rgba(255, 116, 29, 0.8);
   border-color: rgba(255, 116, 29, 0.8);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
@@ -185,7 +185,7 @@ button.btn-start:disabled {
 .lift {
   display: flex;
   margin-right: 3rem;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
 .left-door {
