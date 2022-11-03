@@ -17,9 +17,25 @@ startBtn.addEventListener("click", () => {
       userInputBox.classList.remove("hidden");
     }
   }, 300);
+
+  // ------------------------Show user input------------------------------------
+  const getAllInputFields = document.querySelectorAll("input");
+  for (let i = 0; i < getAllInputFields.length; i++) {
+    getAllInputFields[i].addEventListener("keyup", () => {
+      if (getFloors.value && getLifts.value) {
+        console.log("complete");
+        document.querySelector(".btn-start").removeAttribute("disabled");
+      } else {
+        document
+          .querySelector(".btn-start")
+          .setAttribute("disabled", "disabled");
+      }
+    });
+  }
 });
 
 // -----------------------Get User Input -----------------------------
+
 checkBtn.addEventListener("click", () => {
   let totalFloors;
   let totalLift;
