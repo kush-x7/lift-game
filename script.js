@@ -22,7 +22,8 @@ startBtn.addEventListener("click", () => {
   const getAllInputFields = document.querySelectorAll("input");
   for (let i = 0; i < getAllInputFields.length; i++) {
     getAllInputFields[i].addEventListener("keyup", () => {
-      if (getFloors.value && getLifts.value) {
+      const isLiftUnderTen = getLifts.value <= 10;
+      if (getFloors.value && getLifts.value && isLiftUnderTen) {
         console.log("complete");
         document.querySelector(".btn-start").removeAttribute("disabled");
       } else {
@@ -106,18 +107,12 @@ checkBtn.addEventListener("click", () => {
           const liftDistance = Number(
             floorNumber - currentFloorOfNonMovingLift
           );
-
           allLiftDistancesDifference.push(liftDistance); // -> [6, 2, 7, 6]
         }
 
-        console.log(allLiftDistancesDifference);
-
         const getMinDistanceValue = Math.min(...allLiftDistancesDifference);
-        console.log("I'm the least distance value", getMinDistanceValue);
-
         const leastDistanceIndex =
           allLiftDistancesDifference.indexOf(getMinDistanceValue);
-        console.log("I'm the least distance", leastDistanceIndex);
 
         getAllNonMovingLifts[leastDistanceIndex].classList.remove("not-moving");
         const myLift = getAllNonMovingLifts[leastDistanceIndex];
@@ -131,6 +126,19 @@ checkBtn.addEventListener("click", () => {
         setTimeout(() => {
           getAllNonMovingLifts[leastDistanceIndex].classList.add("not-moving");
         }, (timeToReachOnFloor + 5) * 1000);
+
+        setTimeout(() => {
+          getAllNonMovingLifts[leastDistanceIndex].children[0].classList.add(
+            "left-door--animation"
+          );
+          getAllNonMovingLifts[leastDistanceIndex].children[1].classList.add(
+            "right-door--animation"
+          );
+          // document.querySelectorAll(".left-door").dataset.left -
+          //   door.classList.add("left-door--animation");
+          // document.querySelectorAll(".right-door").dataset.left -
+          //   door.classList.add("right-door--animation");
+        }, timeToReachOnFloor * 1000);
       });
     });
 
@@ -142,8 +150,8 @@ checkBtn.addEventListener("click", () => {
       // 0 = a, 1 =b  2=c ...
       const lift = `
       <div class="lift lift-${i} not-moving " data-current-floor="0">
-        <div class="left-door"></div>
-        <div class="right-door"></div>
+        <div class="left-door " data-left-door=${i}></div>
+        <div class="right-door" data-right-door=${i}></div>
       </div> `;
 
       liftRow.innerHTML += lift;

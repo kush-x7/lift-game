@@ -186,6 +186,7 @@ button.btn-start:disabled {
   display: flex;
   margin-right: 3rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
 .left-door {
@@ -194,6 +195,15 @@ button.btn-start:disabled {
   background-color: #fcf9c6;
   margin-right: 0.1rem;
 }
+
+.left-door--animation {
+  animation: moveDoorLeft 5s ease-in-out;
+}
+
+.right-door--animation {
+  animation: moveDoorRight 5s ease-in-out;
+}
+
 .right-door {
   height: 12rem;
   width: 5rem;
@@ -213,6 +223,30 @@ button.btn-start:disabled {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes moveDoorRight {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveDoorLeft {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-5rem);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
 
