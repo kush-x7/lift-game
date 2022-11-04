@@ -179,14 +179,6 @@ function styleFloorMarginAfterRemovingButton(totalFloors) {
 }
 
 function addLiftAnimation(myLift, timeToReachOnFloor, bothButtons, e) {
-  if (
-    myLift.children[0].classList.contains("left-door--animation") &&
-    myLift.children[1].classList.contains("right-door--animation")
-  ) {
-    myLift.children[0].classList.remove("left-door--animation");
-    myLift.children[1].classList.remove("right-door--animation");
-  }
-
   setTimeout(() => {
     myLift.classList.add("not-moving");
     // currentButton.target.removeAttribute("disabled");
@@ -204,4 +196,9 @@ function addLiftAnimation(myLift, timeToReachOnFloor, bothButtons, e) {
     myLift.children[0].classList.add("left-door--animation");
     myLift.children[1].classList.add("right-door--animation");
   }, timeToReachOnFloor * 1000);
+
+  setTimeout(() => {
+    myLift.children[0].classList.remove("left-door--animation");
+    myLift.children[1].classList.remove("right-door--animation");
+  }, (timeToReachOnFloor + 5) * 1000);
 }
