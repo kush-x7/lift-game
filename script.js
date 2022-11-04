@@ -7,28 +7,22 @@ const userInputBox = document.querySelector(".user-input");
 const getFloors = document.querySelector(".user-input__floors");
 const getLifts = document.querySelector(".user-input__lifts");
 
-// -----------------------Hiding The Start Button-----------------------------
+// -----------------------Hiding The Start Button And Showing Input Box-----------------------------
 
 startBtn.addEventListener("click", () => {
-  setTimeout(() => {
-    startBtn.setAttribute("class", "hidden");
+  hideStartButton_ShowInput();
 
-    if (userInputBox.classList.contains("hidden")) {
-      userInputBox.classList.remove("hidden");
-    }
-  }, 300);
-
-  // ------------------------Show user input------------------------------------
+  // ------------------------Working With Input Fields---------------------------------------------------------
+  const checkInputsBtn = document.querySelector(".btn-start");
   const getAllInputFields = document.querySelectorAll("input");
   for (let i = 0; i < getAllInputFields.length; i++) {
     getAllInputFields[i].addEventListener("keyup", () => {
-      const isLiftUnderTen = getLifts.value <= 6;
-      if (getFloors.value && getLifts.value && isLiftUnderTen) {
-        document.querySelector(".btn-start").removeAttribute("disabled");
+      const isLiftUnderSix = getLifts.value <= 6;
+      if (getFloors.value && getLifts.value && isLiftUnderSix) {
+        checkInputsBtn.removeAttribute("disabled");
       } else {
-        document
-          .querySelector(".btn-start")
-          .setAttribute("disabled", "disabled");
+        // We are disabling because if the user input less value after activating the button
+        checkInputsBtn.setAttribute("disabled", "disabled");
       }
     });
   }
@@ -41,22 +35,16 @@ checkBtn.addEventListener("click", () => {
   let totalLift;
 
   if (getFloors.value) {
-    //  Check for the max number
     totalFloors = Number(getFloors.value);
   }
 
   if (getLifts.value) {
-    // Check for the max number
     totalLift = Number(getLifts.value);
   }
 
   // -----------------------Hiding  User Input & showing Lifts and floors-----------------------------
   if (getFloors.value && getLifts.value) {
-    userInputBox.classList.add("hidden");
-    container.classList.remove("center-item");
-    container.classList.add("container-2");
-
-    // Step 4 Creating Floors an lifts
+    hideInputBox_ShowLiftsAndFLoors();
 
     // -----------------------Creating Floors-----------------------------
     for (let i = 0; i < totalFloors; i++) {
@@ -67,36 +55,40 @@ checkBtn.addEventListener("click", () => {
 
       // 2 Now insert this string inside the above div
       const floor = `      
-        <div class="floor__buttons floor__buttons-${i} ">
-        <button class="btn button-up button-up-${i}">⬆</button>
-        <button class="btn button-down button-down-${i}">⬇</button>
-        </div>
-        <div class="floor__number floor-${i}">Floor ${i}</div> `;
+      <div class="floor__buttons floor__buttons-${i} ">
+      <button class="btn button-up button-up-${i} lift-button--disabled" >⬆</button>
+      <button class="btn button-down button-down-${i} lift-button--disabled" >⬇</button>
+      </div>
+      <div class="floor__number floor-${i}">Floor ${i}</div> `;
 
       floorRow.innerHTML = floor;
       container.append(floorRow);
     }
 
-    // -----------------------Hiding Lift buttons-----------------------------
-    document.querySelector(".button-down-0").remove();
-    document.querySelector(`.button-up-${totalFloors - 1}`).remove();
-    document.querySelector(`.row-0`).style.marginTop = "3.4rem";
-    document.querySelector(`.row-${totalFloors - 1}`).style.marginTop =
-      "4.5rem";
+    // -----------------------Hiding Lift buttons && Add some styling-----------------------------
+    hidingFirstAndLastLiftButtons(totalFloors);
+    styleFloorMarginAfterRemovingButton(totalFloors);
 
     // -----------------------Moving Lift on clicking button-----------------------------
-    const liftButton = document.querySelectorAll(".btn");
-    liftButton.forEach((button) => {
+    const liftButtons = document.querySelectorAll(".btn");
+    liftButtons.forEach((button) => {
       button.addEventListener("click", (e) => {
         const floorNumber = Number(
           e.target.parentNode.classList[1].split("-")[1]
         );
 
-        const getAllNonMovingLifts = document.querySelectorAll(".not-moving");
-        const getFirstNonMovingLift = getAllNonMovingLifts[0];
+        // Disabling lift button
+        const bothButtons = e.target.parentNode.children;
+        for (let i = 0; i < bothButtons.length; i++) {
+          bothButtons[i].setAttribute("disabled", "disabled");
 
-        //
+          console.log(bothButtons[i].classList);
+        }
+
         // ----------------------Checking floors of lift-----------------------------
+
+        // GEtting Differences of the closest lift-----------------------------------
+        const getAllNonMovingLifts = document.querySelectorAll(".not-moving");
         let allLiftDistancesDifference = [];
         for (let i = 0; i < getAllNonMovingLifts.length; i++) {
           const currentFloorOfNonMovingLift = Number(
@@ -106,8 +98,7 @@ checkBtn.addEventListener("click", () => {
           const liftDistance = Math.abs(
             floorNumber - currentFloorOfNonMovingLift
           );
-
-          allLiftDistancesDifference.push(liftDistance); // -> [6, 2, 7, 6]
+          allLiftDistancesDifference.push(liftDistance);
         }
 
         const getMinDistanceValue = Math.min(...allLiftDistancesDifference);
@@ -115,55 +106,29 @@ checkBtn.addEventListener("click", () => {
           allLiftDistancesDifference.indexOf(getMinDistanceValue);
 
         getAllNonMovingLifts[leastDistanceIndex].classList.remove("not-moving");
+
+        // Found the closest lift and now working on the closest lift-------------------
+
         const myLift = getAllNonMovingLifts[leastDistanceIndex];
         myLift.classList.add(`move-my-lift`);
         myLift.style.transform =
           floorNumber !== 0
             ? `translateY(-${17 * floorNumber}rem)`
             : `translateY(0rem)`;
-        const timeToReachOnFloor =
-          Math.abs(
-            floorNumber -
-              getAllNonMovingLifts[leastDistanceIndex].dataset.currentFloor
-          ) * 2;
-        // : 2 * getAllNonMovingLifts[leastDistanceIndex].dataset.currentFloor;
-        myLift.style.transition = `all ${timeToReachOnFloor}s`;
-        console.log("time", timeToReachOnFloor);
-        getAllNonMovingLifts[leastDistanceIndex].dataset.currentFloor =
-          floorNumber;
-        console.log(typeof floorNumber);
 
-        if (
-          getAllNonMovingLifts[
-            leastDistanceIndex
-          ].children[0].classList.contains("left-door--animation") &&
-          getAllNonMovingLifts[
-            leastDistanceIndex
-          ].children[1].classList.contains("right-door--animation")
-        ) {
-          getAllNonMovingLifts[leastDistanceIndex].children[0].classList.remove(
-            "left-door--animation"
-          );
-          getAllNonMovingLifts[leastDistanceIndex].children[1].classList.remove(
-            "right-door--animation"
-          );
-        }
-        setTimeout(() => {
-          getAllNonMovingLifts[leastDistanceIndex].classList.add("not-moving");
-        }, (timeToReachOnFloor + 5) * 1000);
+        const closestLift = myLift.dataset.currentFloor;
+        const timeToReachOnFloor = Math.abs(floorNumber - closestLift) * 2;
+        myLift.style.transition =
+          timeToReachOnFloor !== myLift.dataset.currentFloor
+            ? `all ${timeToReachOnFloor}s`
+            : `all 1s`;
 
-        setTimeout(() => {
-          getAllNonMovingLifts[leastDistanceIndex].children[0].classList.add(
-            "left-door--animation"
-          );
-          getAllNonMovingLifts[leastDistanceIndex].children[1].classList.add(
-            "right-door--animation"
-          );
-        }, timeToReachOnFloor * 1000);
+        addLiftAnimation(myLift, timeToReachOnFloor, bothButtons);
+        myLift.dataset.currentFloor = floorNumber;
       });
     });
 
-    // Let's Create Lift
+    // ------------------LEt's create lift -------------------------------------
     const liftRow = document.createElement("div");
     liftRow.setAttribute("class", `lift__row`);
 
@@ -171,8 +136,8 @@ checkBtn.addEventListener("click", () => {
       // 0 = a, 1 =b  2=c ...
       const lift = `
       <div class="lift lift-${i} not-moving " data-current-floor="0">
-        <div class="left-door " data-left-door=${i}></div>
-        <div class="right-door" data-right-door=${i}></div>
+      <div class="left-door " data-left-door=${i}></div>
+      <div class="right-door" data-right-door=${i}></div>
       </div> `;
 
       liftRow.innerHTML += lift;
@@ -181,3 +146,56 @@ checkBtn.addEventListener("click", () => {
     }
   }
 });
+
+// HELPER FUNCTIONS
+
+function hideStartButton_ShowInput() {
+  setTimeout(() => {
+    startBtn.setAttribute("class", "hidden");
+
+    if (userInputBox.classList.contains("hidden")) {
+      userInputBox.classList.remove("hidden");
+    }
+  }, 300);
+}
+
+function hideInputBox_ShowLiftsAndFLoors() {
+  userInputBox.classList.add("hidden");
+  container.classList.remove("center-item");
+  container.classList.add("container-2");
+}
+
+function hidingFirstAndLastLiftButtons(totalFloors) {
+  document.querySelector(".button-down-0").remove();
+  document.querySelector(`.button-up-${totalFloors - 1}`).remove();
+}
+
+function styleFloorMarginAfterRemovingButton(totalFloors) {
+  document.querySelector(`.row-0`).style.marginTop = "3.4rem";
+  document.querySelector(`.row-${totalFloors - 1}`).style.marginTop = "4.5rem";
+}
+
+function addLiftAnimation(myLift, timeToReachOnFloor, bothButtons) {
+  if (
+    myLift.children[0].classList.contains("left-door--animation") &&
+    myLift.children[1].classList.contains("right-door--animation")
+  ) {
+    myLift.children[0].classList.remove("left-door--animation");
+    myLift.children[1].classList.remove("right-door--animation");
+  }
+
+  setTimeout(() => {
+    myLift.classList.add("not-moving");
+    // currentButton.target.removeAttribute("disabled");
+    for (let i = 0; i < bothButtons.length; i++) {
+      bothButtons[i].removeAttribute("disabled", "disabled");
+
+      console.log(bothButtons[i].classList);
+    }
+  }, (timeToReachOnFloor + 5) * 1000);
+
+  setTimeout(() => {
+    myLift.children[0].classList.add("left-door--animation");
+    myLift.children[1].classList.add("right-door--animation");
+  }, timeToReachOnFloor * 1000);
+}
