@@ -176,7 +176,7 @@ button.btn-start:disabled {
 }
 
 .lift-button__secondary--disabled:disabled {
-  outline: none;
+  outline: none !important;
 }
 
 .lift-button--disabled:disabled:hover {

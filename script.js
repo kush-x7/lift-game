@@ -82,6 +82,9 @@ checkBtn.addEventListener("click", () => {
         for (let i = 0; i < bothButtons.length; i++) {
           bothButtons[i].setAttribute("disabled", "disabled");
 
+          if (bothButtons[i] !== e.target) {
+            bothButtons[i].classList.add("lift-button__secondary--disabled");
+          }
           console.log(bothButtons[i].classList);
         }
 
@@ -123,7 +126,7 @@ checkBtn.addEventListener("click", () => {
             ? `all ${timeToReachOnFloor}s`
             : `all 1s`;
 
-        addLiftAnimation(myLift, timeToReachOnFloor, bothButtons);
+        addLiftAnimation(myLift, timeToReachOnFloor, bothButtons, e);
         myLift.dataset.currentFloor = floorNumber;
       });
     });
@@ -175,7 +178,7 @@ function styleFloorMarginAfterRemovingButton(totalFloors) {
   document.querySelector(`.row-${totalFloors - 1}`).style.marginTop = "4.5rem";
 }
 
-function addLiftAnimation(myLift, timeToReachOnFloor, bothButtons) {
+function addLiftAnimation(myLift, timeToReachOnFloor, bothButtons, e) {
   if (
     myLift.children[0].classList.contains("left-door--animation") &&
     myLift.children[1].classList.contains("right-door--animation")
@@ -190,6 +193,9 @@ function addLiftAnimation(myLift, timeToReachOnFloor, bothButtons) {
     for (let i = 0; i < bothButtons.length; i++) {
       bothButtons[i].removeAttribute("disabled", "disabled");
 
+      if (bothButtons[i] !== e.target) {
+        bothButtons[i].classList.remove("lift-button__secondary--disabled");
+      }
       console.log(bothButtons[i].classList);
     }
   }, (timeToReachOnFloor + 5) * 1000);
