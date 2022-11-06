@@ -62,6 +62,7 @@ body {
 }
 
 .btn-big {
+  transform: scale(1.2);
   padding: 1.5rem 4rem;
 }
 
@@ -83,6 +84,7 @@ body {
 
 .user-input--animated {
   animation: moveInUp 1s ease-out;
+  animation-fill-mode: backwards;
 }
 
 label {
@@ -91,6 +93,7 @@ label {
 }
 
 .user-input {
+  transform: scale(1.5);
   display: flex;
   padding: 3rem;
   max-width: 20rem;
@@ -314,6 +317,10 @@ input[type="number"] {
 @media (max-width: 936px) {
   html {
     font-size: 42.5%;
+  }
+
+  .user-input {
+    transform: scale(1);
   }
 }
 

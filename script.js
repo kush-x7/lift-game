@@ -78,15 +78,18 @@ checkBtn.addEventListener("click", () => {
         );
 
         // Disabling lift button
-        const bothButtons = e.target.parentNode.children;
-        for (let i = 0; i < bothButtons.length; i++) {
-          bothButtons[i].setAttribute("disabled", "disabled");
+        // const bothButtons = e.target.parentNode.children;
+        // for (let i = 0; i < bothButtons.length; i++) {
+        //   bothButtons[i].setAttribute("disabled", "disabled");
 
-          if (bothButtons[i] !== e.target) {
-            bothButtons[i].classList.add("lift-button__secondary--disabled");
-          }
-          console.log(bothButtons[i].classList);
-        }
+        //   if (bothButtons[i] !== e.target) {
+        //     bothButtons[i].classList.add("lift-button__secondary--disabled");
+        //   }
+        //   console.log(bothButtons[i].classList);
+        // }
+
+        const currentLiftButton = e.target;
+        currentLiftButton.setAttribute("disabled", "disabled");
 
         // ----------------------Checking floors of lift-----------------------------
 
@@ -107,27 +110,37 @@ checkBtn.addEventListener("click", () => {
         const getMinDistanceValue = Math.min(...allLiftDistancesDifference);
         const leastDistanceIndex =
           allLiftDistancesDifference.indexOf(getMinDistanceValue);
+        if (leastDistanceIndex === -1) {
+          currentLiftButton.removeAttribute("disabled", "disabled");
+        } else {
+          getAllNonMovingLifts[leastDistanceIndex].classList.remove(
+            "not-moving"
+          );
 
-        getAllNonMovingLifts[leastDistanceIndex].classList.remove("not-moving");
+          // Found the closest lift and now working on the closest lift-------------------
 
-        // Found the closest lift and now working on the closest lift-------------------
+          const myLift = getAllNonMovingLifts[leastDistanceIndex];
+          myLift.classList.add(`move-my-lift`);
+          myLift.style.transform =
+            floorNumber !== 0
+              ? `translateY(-${17 * floorNumber}rem)`
+              : `translateY(0rem)`;
 
-        const myLift = getAllNonMovingLifts[leastDistanceIndex];
-        myLift.classList.add(`move-my-lift`);
-        myLift.style.transform =
-          floorNumber !== 0
-            ? `translateY(-${17 * floorNumber}rem)`
-            : `translateY(0rem)`;
+          const closestLift = myLift.dataset.currentFloor;
+          const timeToReachOnFloor = Math.abs(floorNumber - closestLift) * 2;
+          myLift.style.transition =
+            timeToReachOnFloor !== myLift.dataset.currentFloor
+              ? `all ${timeToReachOnFloor}s`
+              : `all 1s`;
 
-        const closestLift = myLift.dataset.currentFloor;
-        const timeToReachOnFloor = Math.abs(floorNumber - closestLift) * 2;
-        myLift.style.transition =
-          timeToReachOnFloor !== myLift.dataset.currentFloor
-            ? `all ${timeToReachOnFloor}s`
-            : `all 1s`;
+          addLiftAnimation(
+            myLift,
+            timeToReachOnFloor,
 
-        addLiftAnimation(myLift, timeToReachOnFloor, bothButtons, e);
-        myLift.dataset.currentFloor = floorNumber;
+            currentLiftButton
+          );
+          myLift.dataset.currentFloor = floorNumber;
+        }
       });
     });
 
@@ -178,18 +191,19 @@ function styleFloorMarginAfterRemovingButton(totalFloors) {
   document.querySelector(`.row-${totalFloors - 1}`).style.marginTop = "4.5rem";
 }
 
-function addLiftAnimation(myLift, timeToReachOnFloor, bothButtons, e) {
+function addLiftAnimation(myLift, timeToReachOnFloor, currentLiftButton) {
   setTimeout(() => {
     myLift.classList.add("not-moving");
     // currentButton.target.removeAttribute("disabled");
-    for (let i = 0; i < bothButtons.length; i++) {
-      bothButtons[i].removeAttribute("disabled", "disabled");
+    currentLiftButton.removeAttribute("disabled", "disabled");
+    // for (let i = 0; i < bothButtons.length; i++) {
+    //   bothButtons[i].removeAttribute("disabled", "disabled");
 
-      if (bothButtons[i] !== e.target) {
-        bothButtons[i].classList.remove("lift-button__secondary--disabled");
-      }
-      console.log(bothButtons[i].classList);
-    }
+    //   if (bothButtons[i] !== e.target) {
+    //     bothButtons[i].classList.remove("lift-button__secondary--disabled");
+    //   }
+    //   console.log(bothButtons[i].classList);
+    // }
   }, (timeToReachOnFloor + 5) * 1000);
 
   setTimeout(() => {
