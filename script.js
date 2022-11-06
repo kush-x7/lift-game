@@ -18,7 +18,8 @@ startBtn.addEventListener("click", () => {
   for (let i = 0; i < getAllInputFields.length; i++) {
     getAllInputFields[i].addEventListener("keyup", () => {
       const isLiftUnderSix = getLifts.value <= 6;
-      if (getFloors.value && getLifts.value && isLiftUnderSix) {
+      const isAboveZero = getLifts.value > 0 && getFloors.value > 0;
+      if (getFloors.value && getLifts.value && isLiftUnderSix && isAboveZero) {
         checkInputsBtn.removeAttribute("disabled");
       } else {
         // We are disabling because if the user input less value after activating the button
