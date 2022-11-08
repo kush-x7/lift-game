@@ -320,7 +320,8 @@ input[type="number"] {
   }
 
   .user-input {
-    transform: scale(1);
+    transform: scale(1.2);
+    max-width: 23rem;
   }
 }
 
@@ -328,16 +329,31 @@ input[type="number"] {
   html {
     font-size: 32.5%;
   }
+
+  .user-input {
+    transform: scale(1.4);
+    max-width: 30rem;
+  }
 }
 
 @media (max-width: 584px) {
   html {
     font-size: 22.5%;
   }
+
+  .user-input {
+    transform: scale(1.2);
+    max-width: 37rem;
+  }
 }
 
 @media (max-width: 402px) {
   html {
     font-size: 18.5%;
+  }
+
+  .user-input {
+    transform: scale(1);
+    max-width: 42rem;
   }
 }
