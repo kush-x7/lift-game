@@ -312,6 +312,11 @@ input[type="number"] {
   html {
     font-size: 52.5%;
   }
+
+  label {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 936px) {
@@ -322,6 +327,11 @@ input[type="number"] {
   .user-input {
     transform: scale(1.2);
     max-width: 23rem;
+  }
+
+  label {
+    font-size: 2rem;
+    font-weight: bold;
   }
 }
 
@@ -334,6 +344,11 @@ input[type="number"] {
     transform: scale(1.4);
     max-width: 30rem;
   }
+
+  label {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 584px) {
@@ -344,6 +359,11 @@ input[type="number"] {
   .user-input {
     transform: scale(1.2);
     max-width: 37rem;
+  }
+
+  label {
+    font-size: 3rem;
+    font-weight: bold;
   }
 }
 
@@ -359,5 +379,10 @@ input[type="number"] {
 
   .start-game {
     transform: scale(1.4);
+  }
+
+  label {
+    font-size: 3rem;
+    font-weight: bold;
   }
 }
