@@ -354,6 +354,10 @@ input[type="number"] {
 
   .user-input {
     transform: scale(1);
-    max-width: 42rem;
+    max-width: 46rem;
+  }
+
+  .start-game {
+    transform: scale(1.4);
   }
 }
